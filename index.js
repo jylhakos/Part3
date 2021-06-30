@@ -81,29 +81,23 @@ function checkValidity(request, response) {
     return response.status(400).json({
     status: 'error',
     error: 'error: request content is empty',
-  }) }
-  /* else if (content.hasOwnProperty('name')) {
+  })} else if (content.hasOwnProperty('name')) {
     console.log('error: has not name')
     return response.status(400).json({error: 'error: has not name'})
-  }*/
-  else if (isKeyEmpty(content.name)) {
+  } else if (isKeyEmpty(content.name)) {
     console.log('error: name is empty')
     return response.status(400).json({
       status: 'error',
       error: 'error: name is empty'})
-  }
-
-  /*else if (content.hasOwnProperty('phone')) {
+  } else if (content.hasOwnProperty('phone')) {
     console.log('error: has not phone')
     return response.status(400).json({error: 'error: has not phone'})
-  }*/
-  else if (isKeyEmpty(content.phone)) {
+  } else if (isKeyEmpty(content.phone)) {
     console.log('error: phone is empty')
     return response.status(400).json({
       status: 'error',
       error: 'error: phone is empty'})
-  }
-  else {
+  } else {
     console.log('content.name', content.name)
 
     const exists = hasKeyValue(persons,content.name)
