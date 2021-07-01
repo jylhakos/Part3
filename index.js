@@ -1,28 +1,29 @@
 const express = require('express')
 const app = express()
 
-// 3.7
-var fs = require('fs');
+// 3.7, 3.8
 const morgan = require('morgan')
-var stream = fs.createWriteStream(__dirname + '/3.7.log',{flags: 'a'});
-app.use(morgan('tiny', {stream: stream}));
-//var options = {stream: stream}
-// 3.8
-//morgan.token('type', function (req, res) { return req.headers['content-type'] })
-//morgan.token('3.7', ":http-version (:'POST') :url => :status ")
-//app.use(morgan({format: 'POST body length in bytes :req[Content-Length]', immediate: true}, options))
-//morgan.token('3.7', ":http-version (:'POST') :url => :status ")
-//morgan.token('3.8', (tokens, req, res) => {
-//  return [
-//    :http-version 
-//    (:'POST') 
-//    :url => :status
-//  ]
-//})
+var fs = require('fs');
 
-//app.use(morgan('3.8', {stream: stream}));
-app.use(morgan('3.7', {stream: stream}));
-// https://github.com/expressjs/morgan
+// 3.7
+var stream_3_7 = fs.createWriteStream(__dirname + '/3.7.log',{flags: 'a'});
+
+// 3.8
+var stream_3_8 = fs.createWriteStream(__dirname + '/3.8.log',{flags: 'a'});
+
+// 3.8
+morgan.token('body', function getBody (request, response) {
+ if (request.method == 'POST') { return JSON.stringify(request.body) }
+})
+
+// 3.7
+app.use(morgan('tiny', {stream: stream_3_7}));
+
+// 3.8
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body', {
+  stream: stream_3_8,
+  //skip: function (req, res) { return req.method != 'POST' }
+}))
 
 app.use(express.json())
 
