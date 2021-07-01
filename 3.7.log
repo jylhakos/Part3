@@ -1,0 +1,20 @@
+GET /api/persons 200 219 - 7.959 ms
+3.7
+GET /api/persons/1 200 50 - 2.910 ms
+3.7
+GET /api/info 404 147 - 6.827 ms
+3.7
+GET /info 200 110 - 2.067 ms
+3.7
+DELETE /api/persons/1 204 - - 1.923 ms
+3.7
+GET /api/persons/1 404 - - 1.376 ms
+3.7
+GET /api/persons 200 168 - 1.269 ms
+3.7
+POST /api/persons 200 59 - 35.842 ms
+3.7
+GET /api/persons/7854502501 200 59 - 0.661 ms
+3.7
+GET /api/persons 200 228 - 1.836 ms
+3.7

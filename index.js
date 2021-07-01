@@ -1,6 +1,29 @@
 const express = require('express')
 const app = express()
 
+// 3.7
+var fs = require('fs');
+const morgan = require('morgan')
+var stream = fs.createWriteStream(__dirname + '/3.7.log',{flags: 'a'});
+app.use(morgan('tiny', {stream: stream}));
+//var options = {stream: stream}
+// 3.8
+//morgan.token('type', function (req, res) { return req.headers['content-type'] })
+//morgan.token('3.7', ":http-version (:'POST') :url => :status ")
+//app.use(morgan({format: 'POST body length in bytes :req[Content-Length]', immediate: true}, options))
+//morgan.token('3.7', ":http-version (:'POST') :url => :status ")
+//morgan.token('3.8', (tokens, req, res) => {
+//  return [
+//    :http-version 
+//    (:'POST') 
+//    :url => :status
+//  ]
+//})
+
+//app.use(morgan('3.8', {stream: stream}));
+app.use(morgan('3.7', {stream: stream}));
+// https://github.com/expressjs/morgan
+
 app.use(express.json())
 
 let persons = [
@@ -76,12 +99,14 @@ function checkValidity(request, response) {
 
   const content = request.body
 
+  console.log('checkValidity', content)
+
   if(isObjectEmpty(content)) {
     console.log('error: content is empty')
     return response.status(400).json({
     status: 'error',
     error: 'error: request content is empty',
-  })} else if (content.hasOwnProperty('name')) {
+  })} else if (content.hasOwnProperty('name') === false) {
     console.log('error: has not name')
     return response.status(400).json({error: 'error: has not name'})
   } else if (isKeyEmpty(content.name)) {
@@ -89,7 +114,7 @@ function checkValidity(request, response) {
     return response.status(400).json({
       status: 'error',
       error: 'error: name is empty'})
-  } else if (content.hasOwnProperty('phone')) {
+  } else if (content.hasOwnProperty('phone') === false) {
     console.log('error: has not phone')
     return response.status(400).json({error: 'error: has not phone'})
   } else if (isKeyEmpty(content.phone)) {
