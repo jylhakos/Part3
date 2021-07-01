@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express()
+// 3.9
+const cors = require('cors')
+//$ npm install cors
+
 
 // 3.7, 3.8
 const morgan = require('morgan')
@@ -26,6 +30,8 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 }))
 
 app.use(express.json())
+
+app.use(cors())
 
 let persons = [
     {
@@ -148,7 +154,7 @@ app.get('/', (request, response) => {
 
 // 3.1
 app.get('/api/persons', (request, response) => {
-  console.log(persons)
+  console.log('/api/persons', persons,request.body)
   return response.json(persons)
 })
 

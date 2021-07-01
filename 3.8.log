@@ -11,3 +11,15 @@ DELETE /api/persons/1 204 - - 1.462 ms -
 GET /api/persons 200 228 - 1.429 ms -
 POST /api/persons 200 59 - 5.695 ms {"name":"Arto Hellas","phone":"0123456789"}
 GET /api/persons 200 288 - 1.438 ms -
+GET /api/persons 200 219 - 10.854 ms -
+GET /api/persons 200 219 - 1.212 ms -
+GET /favicon.ico 404 150 - 3.231 ms -
+GET /api/persons 200 219 - 0.728 ms -
+GET /api/persons 200 219 - 0.768 ms -
+GET /api/persons 200 219 - 1.117 ms -
+GET /api/persons 200 219 - 0.931 ms -
+GET /api/persons 200 219 - 0.430 ms -
+GET /api/persons 200 219 - 0.586 ms -
+GET /api/persons 200 219 - 0.471 ms -
+GET /api/persons 200 219 - 10.436 ms -
+GET /api/persons 200 219 - 0.811 ms -
