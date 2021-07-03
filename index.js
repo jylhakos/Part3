@@ -1,9 +1,16 @@
 const express = require('express')
 const app = express()
+
 // 3.9
 const cors = require('cors')
 //$ npm install cors
 
+// 3.13
+// $ npm install dotenv
+require('dotenv').config()
+
+// 3.13
+const Person = require('./models/db')
 
 // 3.7, 3.8
 const morgan = require('morgan')
@@ -33,7 +40,8 @@ app.use(express.json())
 
 app.use(cors())
 
-let persons = [
+// 3.1
+/*let persons = [
     {
       "name": "Arto Hellas",
       "phone": "040-123456",
@@ -54,7 +62,7 @@ let persons = [
       "phone": "39-23-6423122",
       "id": 4
     }
-  ]
+  ] */
 
 // 3.5
 function getRandomInt(min, max) {
@@ -152,10 +160,19 @@ app.get('/', (request, response) => {
   response.send('<h1></h1>')
 })
 
+// 3.13
+// $ curl -X "GET" http://localhost:3001/api/persons
+
 // 3.1
 app.get('/api/persons', (request, response) => {
-  console.log('/api/persons', persons,request.body)
-  return response.json(persons)
+  console.log('/api/persons', request.body)
+  // 3.13
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
+
+  // 3.1
+  //return response.json(persons)
 })
 
 // 3.2
@@ -256,9 +273,13 @@ app.post('/api/persons', (request, response) => {
   }
 })
 
-//curl -X POST http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+//curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
 
+// 3.1
 const PORT = 3001
+
+//3.13 
+//const PORT = process.env.PORT
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
