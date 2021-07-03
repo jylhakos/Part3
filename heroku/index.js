@@ -2,6 +2,15 @@
 // https://cs-e4670.herokuapp.com/ 
 // https://git.heroku.com/cs-e4670.git
 
+// 3.11
+// cp -r frontend/build ../backend/.
+
+// 3.11
+// $ git push heroku master
+
+// 3.11
+// https://cs-e4670.herokuapp.com/
+
 const express = require('express')
 const app = express()
 // 3.9
@@ -36,6 +45,9 @@ const cors = require('cors')
 app.use(express.json())
 
 app.use(cors())
+
+// 3.11
+app.use(express.static('build'))
 
 let persons = [
     {

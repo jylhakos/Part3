@@ -23,5 +23,6 @@
   "bugs": {
     "url": "https://github.com/jylhakos/Part3/issues"
   },
-  "homepage": "https://github.com/jylhakos/Part3#readme"
+  "homepage": "https://github.com/jylhakos/Part3",
+  "proxy": "http://localhost:3001"
 }
