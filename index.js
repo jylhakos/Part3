@@ -401,10 +401,13 @@ app.put('/api/persons/:id', (request, response, next) => {
 app.use(errorHandler)
 
 // 3.1
-const PORT = 3001
+//const PORT = 3001
 
 //3.13 
 //const PORT = process.env.PORT
+
+// 3.21
+const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)

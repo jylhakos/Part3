@@ -1,28 +1,37 @@
-// 3.11
-// A browser opens the address http://localhost:3001, and the  
-// server returns the index.html file from the build repository.
-
-// 3.10, 3.11
-// https://cs-e4670.herokuapp.com/
-
-// 3.10, 3.11
-// https://git.heroku.com/cs-e4670.git
-
-// 3.11
-// cp -r frontend/build ../backend/.
-
-// 3.11
-// $ git push heroku master
-
-// 3.11
-// https://cs-e4670.herokuapp.com/
-
 const express = require('express')
 const app = express()
+
 // 3.9
 const cors = require('cors')
 //$ npm install cors
 
+// 3.13
+// $ npm install dotenv
+require('dotenv').config()
+
+// 3.13
+const Person = require('./models/db')
+
+// 3.13, 3.14, 3.15
+app.use(express.static('build'))
+
+// 3.15
+app.use(express.json())
+
+// 3.16, 3.19
+const errorHandler = (error, request, response, next) => {
+
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    console.log('ValidationError', error.message)
+    return response.status(400).json({ error: error.message })
+  }
+
+  next(error)
+}
 
 // 3.7, 3.8
 //const morgan = require('morgan')
@@ -52,10 +61,11 @@ app.use(express.json())
 
 app.use(cors())
 
-// 3.11
-app.use(express.static('build'))
+// 3.13
+var persons = []
 
-let persons = [
+// 3.1, 3.2, 3.3
+/*let persons = [
     {
       "name": "Arto Hellas",
       "phone": "040-123456",
@@ -76,7 +86,9 @@ let persons = [
       "phone": "39-23-6423122",
       "id": 4
     }
-  ]
+  ] */
+
+var persons_length = persons.length
 
 // 3.5
 function getRandomInt(min, max) {
@@ -174,20 +186,39 @@ app.get('/', (request, response) => {
   response.send('<h1></h1>')
 })
 
+// 3.13
+// $ curl -X "GET" http://localhost:3001/api/persons
+
 // 3.1
 app.get('/api/persons', (request, response) => {
-  console.log('/api/persons', persons,request.body)
-  return response.json(persons)
+  console.log('/api/persons', request.body)
+  // 3.13
+  Person.find({})
+  .then(persons => {
+    persons_length = persons.length
+    console.log('persons_length', persons_length)
+    response.json(persons)
+  })
+
+  // 3.1
+  //return response.json(persons)
 })
 
 // 3.2
-app.get('/info', (request, response) => {
+app.get('/info', async (request, response) => {
 
   let dateTime = new Date();
 
   dateTime.toGMTString('en-US', { timeZone: 'Europe/Helsinki' });
 
-  let info = "<div>Phonebook has info for " + persons.length + " people</div>" + "<br>" + dateTime + "</br>"
+  // 3.18
+  await Person.find({})
+  .then(persons => {
+    persons_length = persons.length
+    console.log('persons_length', persons_length)
+  })
+
+  let info = "<div>Phonebook has info for " + persons_length + " people</div>" + "<br>" + dateTime + "</br>"
 
   console.log(info)
 
@@ -197,46 +228,75 @@ app.get('/info', (request, response) => {
 
 // $ curl -X "GET" "http://localhost:3001/api/persons/2"
 
-// 3.3
-app.get('/api/persons/:id', (request, response) => {
+// 3.3, 3.15
+app.get('/api/persons/:id', (request, response, next) => {
 
-  const id = Number(request.params.id)
+  // 3.3
+  //const id = Number(request.params.id)
+
+  // 3.15
+  const id = request.params.id
 
   console.log('GET', '/api/persons/' + id)
   
-  const person = persons.find(person => person.id === id)
+  // 3.3
+  //const person = persons.find(person => person.id === id)
   
-  console.log(person)
+  //console.log(person)
   
-  if (person) {
+  // 3.3
+  //if (person) {
 
-    response.json(person)
+  //  response.json(person)
 
-  } else {
+  //} else {
 
-    response.status(404).end()
+  //  response.status(404).end()
 
-  }
+  //}
+
+  // 3.15
+  Person.findById(id)
+    .then(person => {
+      console.log(person)
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log("ERROR")
+      next(error)
+    })
+
 })
 
 // $ curl -X "DELETE" "http://localhost:3001/api/persons/2"
 
-// 3.4
-app.delete('/api/persons/:id', (request, response) => {
+// 3.4, 3.15
+app.delete('/api/persons/:id', (request, response, next) => {
 
-  const id = Number(request.params.id)
+  // 3.4
+  //const id = Number(request.params.id)
+
+  // 3.15
+  const id = request.params.id
 
   console.log('DELETE', '/api/persons/' + id)
 
-  const person = persons.filter(person => person.id === id)
+  // 3.4
+  //const person = persons.filter(person => person.id === id)
 
-  const index = persons.findIndex(function(person, i) {
-    return person.id === id
-  });
+  // 3.4
+  //const index = persons.findIndex(function(person, i) {
+  //  return person.id === id
+  //});
 
-  console.log('person', person)
+  // console.log('person', person)
 
-  if (person) {
+  // 3.4
+  /*if (person) {
 
     persons.splice(index, 1);
 
@@ -246,11 +306,20 @@ app.delete('/api/persons/:id', (request, response) => {
 
     response.status(404).end()
 
-  }
+  }*/
+
+  // 3.15
+  Person.findByIdAndRemove(id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
-// 3.5, 3.6
-app.post('/api/persons', (request, response) => {
+// $ curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+
+// 3.5, 3.6, 3.19
+app.post('/api/persons', (request, response, next) => {
 
   console.log('request.body', request.body)
 
@@ -264,25 +333,79 @@ app.post('/api/persons', (request, response) => {
 
   if (result == null) {
 
-    const person = {
+    // 3.1, 3.2, 3.3
+    /*const person = {
       name: content.name,
       phone: content.phone,
       id: generateId(),
-    }
+    }*/
+
+    // 3.14, 3.18
+    const person = new Person({
+      name: content.name,
+      phone: content.phone,
+    })
 
     persons = persons.concat(person)
 
     console.log(person)
 
-    return response.json(person)
+    // 3.14, 3.18
+    person.save().then(person => {
+
+      console.log('person._id', person._id)
+
+      person.id = person._id
+
+      console.log('person', person)
+
+      return response.json(person)
+    })
+    .catch(error => next(error))
+
+    // 3.1, 3.2, 3.3
+    //return response.json(person)
   }
 })
 
-//curl -X POST http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+// 3.17 
+app.put('/api/persons/:id', (request, response, next) => {
 
+  const id = request.params.id
+
+  const content = request.body
+
+  if (content === undefined) {
+    return response.status(400).json({ error: 'content missing' })
+  }
+
+  console.log(content.name, content.phone, id)
+
+  const person = {
+      name: content.name,
+      phone: content.phone,
+    }
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then(person => {
+      console.log('person', person)
+      response.json(person)
+    })
+    .catch(error => next(error))
+})
+
+// $ curl -X "PUT" "http://localhost:3001/api/persons/60e14baef45d6a4712a8e018" -H "Content-Type: application/json" -d "{\"name\":\"Arto Hellas\", \"phone\":\"040-123456\"}"
+
+// 3.16 
+app.use(errorHandler)
+
+// 3.1
 //const PORT = 3001
 
-// 3.10, 3.11
+//3.13 
+//const PORT = process.env.PORT
+
+// 3.21
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {

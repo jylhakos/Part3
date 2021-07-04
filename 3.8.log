@@ -122,3 +122,8 @@ DELETE /api/persons/60e172ebf69ad379b9c2de30 204 - - 431.310 ms -
 GET /api/persons 200 388 - 441.745 ms -
 POST /api/persons 400 55 - 3.661 ms {"name":"Arto Hellas","phone":"040-654321"}
 PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 428.878 ms -
+GET /api/persons 200 388 - 1268.879 ms -
+PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 448.709 ms -
+GET /api/persons 200 388 - 436.071 ms -
+GET /info 200 110 - 268.036 ms -
+GET /api/persons 304 - - 237.864 ms -
