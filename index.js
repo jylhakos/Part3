@@ -18,6 +18,19 @@ app.use(express.static('build'))
 // 3.15
 app.use(express.json())
 
+// 3.16
+const errorHandler = (error, request, response, next) => {
+
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+
 // 3.7, 3.8
 const morgan = require('morgan')
 var fs = require('fs');
@@ -336,6 +349,9 @@ app.post('/api/persons', (request, response) => {
 })
 
 //curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+
+// 3.16 
+app.use(errorHandler)
 
 // 3.1
 const PORT = 3001
