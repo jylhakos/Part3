@@ -15,6 +15,9 @@ const Person = require('./models/db')
 // 3.13, 3.14, 3.15
 app.use(express.static('build'))
 
+// 3.15
+app.use(express.json())
+
 // 3.7, 3.8
 const morgan = require('morgan')
 var fs = require('fs');
@@ -202,46 +205,75 @@ app.get('/info', (request, response) => {
 
 // $ curl -X "GET" "http://localhost:3001/api/persons/2"
 
-// 3.3
-app.get('/api/persons/:id', (request, response) => {
+// 3.3, 3.15
+app.get('/api/persons/:id', (request, response, next) => {
 
-  const id = Number(request.params.id)
+  // 3.3
+  //const id = Number(request.params.id)
+
+  // 3.15
+  const id = request.params.id
 
   console.log('GET', '/api/persons/' + id)
   
-  const person = persons.find(person => person.id === id)
+  // 3.3
+  //const person = persons.find(person => person.id === id)
   
-  console.log(person)
+  //console.log(person)
   
-  if (person) {
+  // 3.3
+  //if (person) {
 
-    response.json(person)
+  //  response.json(person)
 
-  } else {
+  //} else {
 
-    response.status(404).end()
+  //  response.status(404).end()
 
-  }
+  //}
+
+  // 3.15
+  Person.findById(id)
+    .then(person => {
+      console.log(person)
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log("ERROR")
+      next(error)
+    })
+
 })
 
 // $ curl -X "DELETE" "http://localhost:3001/api/persons/2"
 
-// 3.4
-app.delete('/api/persons/:id', (request, response) => {
+// 3.4, 3.15
+app.delete('/api/persons/:id', (request, response, next) => {
 
-  const id = Number(request.params.id)
+  // 3.4
+  //const id = Number(request.params.id)
+
+  // 3.15
+  const id = request.params.id
 
   console.log('DELETE', '/api/persons/' + id)
 
-  const person = persons.filter(person => person.id === id)
+  // 3.4
+  //const person = persons.filter(person => person.id === id)
 
-  const index = persons.findIndex(function(person, i) {
-    return person.id === id
-  });
+  // 3.4
+  //const index = persons.findIndex(function(person, i) {
+  //  return person.id === id
+  //});
 
-  console.log('person', person)
+  // console.log('person', person)
 
-  if (person) {
+  // 3.4
+  /*if (person) {
 
     persons.splice(index, 1);
 
@@ -251,7 +283,14 @@ app.delete('/api/persons/:id', (request, response) => {
 
     response.status(404).end()
 
-  }
+  }*/
+
+  // 3.15
+  Person.findByIdAndRemove(id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 // 3.5, 3.6
@@ -280,7 +319,6 @@ app.post('/api/persons', (request, response) => {
     const person = new Person({
       name: content.name,
       phone: content.phone,
-      id: generateId(),
     })
 
     persons = persons.concat(person)

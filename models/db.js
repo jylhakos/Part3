@@ -38,9 +38,10 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
     console.log('error connecting to MongoDB:', error.message)
   })
 
+// 3.15
 const personSchema = new mongoose.Schema({
   name: String,
-  phone: String,
+  phone: String
 })
 
 personSchema.set('toJSON', {
