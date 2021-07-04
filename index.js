@@ -191,7 +191,8 @@ app.get('/', (request, response) => {
 app.get('/api/persons', (request, response) => {
   console.log('/api/persons', request.body)
   // 3.13
-  Person.find({}).then(persons => {
+  Person.find({})
+  .then(persons => {
     persons_length = persons.length
     console.log('persons_length', persons_length)
     response.json(persons)
@@ -202,11 +203,18 @@ app.get('/api/persons', (request, response) => {
 })
 
 // 3.2
-app.get('/info', (request, response) => {
+app.get('/info', async (request, response) => {
 
   let dateTime = new Date();
 
   dateTime.toGMTString('en-US', { timeZone: 'Europe/Helsinki' });
+
+  // 3.18
+  await Person.find({})
+  .then(persons => {
+    persons_length = persons.length
+    console.log('persons_length', persons_length)
+  })
 
   let info = "<div>Phonebook has info for " + persons_length + " people</div>" + "<br>" + dateTime + "</br>"
 
@@ -328,7 +336,7 @@ app.post('/api/persons', (request, response) => {
       id: generateId(),
     }*/
 
-    // 3.14
+    // 3.14, 3.18
     const person = new Person({
       name: content.name,
       phone: content.phone,
@@ -338,8 +346,15 @@ app.post('/api/persons', (request, response) => {
 
     console.log(person)
 
-    // 3.14
+    // 3.14, 3.18
     person.save().then(person => {
+
+      console.log('person._id', person._id)
+
+      person.id = person._id
+
+      console.log('person', person)
+
       return response.json(person)
     })
 

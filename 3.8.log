@@ -57,3 +57,24 @@ GET /api/persons/60e10e88a4585255d6319d8e 200 75 - 459.475 ms -
 GET /api/persons 200 686 - 431.375 ms -
 DELETE /api/persons/60e10e88a4585255d6319d8e 204 - - 438.378 ms -
 GET /api/persons 200 610 - 428.174 ms -
+GET /main.28c0d6bb.chunk.css.map 404 166 - 1.491 ms -
+GET /api/persons 200 610 - 483.313 ms -
+GET /api/persons 200 610 - 4155.419 ms -
+POST /api/persons 200 76 - 463.908 ms {"name":"World Hello","phone":"9-876543210","date":"2021-07-04T05:27:34.230Z","important":true,"id":1}
+DELETE /api/persons/60e146c648ca373fc945dda9 204 - - 453.118 ms -
+GET /api/persons 200 610 - 1162.728 ms -
+POST /api/persons 200 69 - 24724.519 ms {"name":"Anna","phone":"040-1234556","date":"2021-07-04T05:42:51.590Z","important":true,"id":1}
+GET /api/persons 200 71 - 445.477 ms -
+POST /api/persons 200 76 - 427.573 ms {"name":"Jane Austin","phone":"0-123456789","date":"2021-07-04T05:47:19.130Z","important":true,"id":1}
+POST /api/persons 200 79 - 420.323 ms {"name":"Ada Lovelace","phone":"39-44-5323523","date":"2021-07-04T05:47:51.192Z","important":false,"id":"60e14b67f45d6a4712a8e0121"}
+POST /api/persons 200 83 - 410.554 ms {"name":"Mary Poppendieck","phone":"39-23-6423122","date":"2021-07-04T05:48:06.687Z","important":true,"id":"60e14b87f45d6a4712a8e0141"}
+POST /api/persons 200 75 - 418.472 ms {"name":"Arto Hellas","phone":"040-123456","date":"2021-07-04T05:48:30.135Z","important":false,"id":"60e14b96f45d6a4712a8e0161"}
+POST /api/persons 200 80 - 420.876 ms {"name":"Arto Vihavainen","phone":"045-1232456","date":"2021-07-04T05:48:40.271Z","important":false,"id":"60e14baef45d6a4712a8e0181"}
+GET /api/persons/60e14a5bd2d8ae431cbe6b84 200 69 - 410.111 ms -
+DELETE /api/persons/60e14bb8f45d6a4712a8e01a 204 - - 416.074 ms -
+GET /api/persons 200 388 - 412.041 ms -
+GET /info 200 110 - 6.832 ms -
+GET /info 200 110 - 584.767 ms -
+GET /api/persons 200 388 - 420.124 ms -
+GET /api/persons 200 388 - 415.342 ms -
+GET /info 200 110 - 413.527 ms -
