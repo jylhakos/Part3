@@ -22,7 +22,7 @@ console.log('process.env.PASSWORD', process.env.PASSWORD)
 //const url = process.env.MONGODB_URI
 //const url = "mongodb+srv://fullstack:" + process.env.PASSWORD + "@cluster3-13.pmolw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-const url = "mongodb+srv://fullstack:fullstack@cluster3-13.pmolw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const url = "mongodb+srv://fullstack:+""+@cluster3-13.pmolw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 //console.log('name', name, 'phone', phone)
 
