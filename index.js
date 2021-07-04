@@ -43,9 +43,10 @@ app.use(express.json())
 
 app.use(cors())
 
-// 3.1
-let persons = []
+// 3.13
+var persons = []
 
+// 3.1, 3.2, 3.3
 /*let persons = [
     {
       "name": "Arto Hellas",
@@ -69,7 +70,7 @@ let persons = []
     }
   ] */
 
-let persons_length = 0
+var persons_length = persons.length
 
 // 3.5
 function getRandomInt(min, max) {
@@ -268,17 +269,31 @@ app.post('/api/persons', (request, response) => {
 
   if (result == null) {
 
-    const person = {
+    // 3.1, 3.2, 3.3
+    /*const person = {
       name: content.name,
       phone: content.phone,
       id: generateId(),
-    }
+    }*/
+
+    // 3.14
+    const person = new Person({
+      name: content.name,
+      phone: content.phone,
+      id: generateId(),
+    })
 
     persons = persons.concat(person)
 
     console.log(person)
 
-    return response.json(person)
+    // 3.14
+    person.save().then(person => {
+      return response.json(person)
+    })
+
+    // 3.1, 3.2, 3.3
+    //return response.json(person)
   }
 })
 
