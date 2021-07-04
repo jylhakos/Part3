@@ -128,3 +128,7 @@ GET /api/persons 200 388 - 436.071 ms -
 GET /info 200 110 - 268.036 ms -
 GET /api/persons 304 - - 237.864 ms -
 GET /api/persons 200 469 - 606.980 ms -
+GET /api/persons 304 - - 526.440 ms -
+DELETE /api/persons/60e23e64a74ff900157cd18d 204 - - 507.610 ms -
+GET /api/persons 200 388 - 499.163 ms -
+POST /api/persons 200 79 - 1495.437 ms {"name":"Arto Vihavainen","phone":"045-123456","date":"2021-07-04T23:45:12.857Z"}

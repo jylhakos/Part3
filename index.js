@@ -1,3 +1,7 @@
+// 3.22 
+// $ npm install eslint --save-dev
+// $ node_modules/.bin/eslint index.js
+
 const express = require('express')
 const app = express()
 
@@ -46,7 +50,8 @@ var stream_3_8 = fs.createWriteStream(__dirname + '/3.8.log',{flags: 'a'});
 
 // 3.8
 morgan.token('body', function getBody (request, response) {
- if (request.method == 'POST') { return JSON.stringify(request.body) }
+  console.log(response)
+  if (request.method == 'POST') { return JSON.stringify(request.body) }
 })
 
 // 3.7
@@ -105,7 +110,7 @@ const generateId = () => {
   //  : 0console.log('id', id)
   console.log('min', min)
 
-  id = getRandomInt(min,max)
+  var id = getRandomInt(min,max)
 
   console.log('id', id)
 
@@ -312,6 +317,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
   // 3.15
   Person.findByIdAndRemove(id)
     .then(result => {
+      console.log(result)
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -340,6 +346,14 @@ app.post('/api/persons', (request, response, next) => {
       phone: content.phone,
       id: generateId(),
     }*/
+
+    //3.22 
+    const lint_person = {
+      name: content.name,
+      phone: content.phone,
+      id: generateId(),
+    }
+    console.log(lint_person)
 
     // 3.14, 3.18
     const person = new Person({
