@@ -363,6 +363,28 @@ app.post('/api/persons', (request, response) => {
   }
 })
 
+// 3.17 
+app.put('/api/persons/:id', (request, response, next) => {
+
+  const id = request.params.id
+
+  const content = request.body
+
+  console.log(content.name, content.phone, id)
+
+  const person = {
+      name: content.name,
+      phone: content.phone,
+    }
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then(person => {
+      console.log('person', person)
+      response.json(person)
+    })
+    .catch(error => next(error))
+})
+
 //curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
 
 // 3.16 
