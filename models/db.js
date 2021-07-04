@@ -4,7 +4,12 @@
 // 3.12
 // $ node mongo.js password Anna 040-1234556
 
+// 3.19
+// $ npm install --save mongoose-unique-validator
+
 const mongoose = require('mongoose')
+
+var uniqueValidator = require('mongoose-unique-validator');
 
 if (process.argv.length < 2) {
   console.log('Please provide the password as an argument: npm start <password>')
@@ -38,12 +43,22 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
     console.log('error connecting to MongoDB:', error.message)
   })
 
-// 3.15
+// 3.15, 3.19
 const personSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
-  
+  name: {
+    type: String,
+    minLength: 1,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    minLength: 1,
+    required: true
+  },
 })
+
+personSchema.plugin(uniqueValidator);
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {

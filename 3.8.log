@@ -104,3 +104,21 @@ GET /api/persons - - - - ms -
 GET /api/persons 200 388 - 1527.388 ms -
 PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 438.589 ms -
 GET /api/persons 200 388 - 434.231 ms -
+GET /api/persons 200 388 - 483.180 ms -
+POST /api/persons 200 75 - 905.295 ms {"name":"Arto Hellas","phone":"040-654321"}
+POST /api/persons 400 101 - 1638.223 ms {"name":"Arto Hellas","phone":"040-654321"}
+POST /api/persons 200 77 - 1620.192 ms {"name":"Aclear Hellas","phone":"040-654321"}
+POST /api/persons 200 80 - 873.258 ms {"name":"Arto Vihavainen","phone":"045-1232456"}
+POST /api/persons 400 55 - 1.093 ms {"name":"Arto Hellas","phone":"040-654321"}
+PUT /api/persons 404 150 - 1.298 ms -
+GET /api/persons 200 466 - 457.692 ms -
+PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 445.875 ms -
+POST /api/persons 400 55 - 1.394 ms {"name":"Arto Vihavainen","phone":"045-1232456"}
+GET /api/persons 200 388 - 441.339 ms -
+POST /api/persons 400 55 - 1.221 ms {"name":"Arto Vihavainen","phone":"045-1232456"}
+POST /api/persons 200 76 - 873.305 ms {"name":"Hello World","phone":"045-1232456"}
+GET /api/persons 200 465 - 442.203 ms -
+DELETE /api/persons/60e172ebf69ad379b9c2de30 204 - - 431.310 ms -
+GET /api/persons 200 388 - 441.745 ms -
+POST /api/persons 400 55 - 3.661 ms {"name":"Arto Hellas","phone":"040-654321"}
+PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 428.878 ms -

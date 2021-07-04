@@ -18,13 +18,16 @@ app.use(express.static('build'))
 // 3.15
 app.use(express.json())
 
-// 3.16
+// 3.16, 3.19
 const errorHandler = (error, request, response, next) => {
 
   console.error(error.message)
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    console.log('ValidationError', error.message)
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)
@@ -314,8 +317,10 @@ app.delete('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-// 3.5, 3.6
-app.post('/api/persons', (request, response) => {
+// $ curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+
+// 3.5, 3.6, 3.19
+app.post('/api/persons', (request, response, next) => {
 
   console.log('request.body', request.body)
 
@@ -357,6 +362,7 @@ app.post('/api/persons', (request, response) => {
 
       return response.json(person)
     })
+    .catch(error => next(error))
 
     // 3.1, 3.2, 3.3
     //return response.json(person)
@@ -369,6 +375,10 @@ app.put('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
 
   const content = request.body
+
+  if (content === undefined) {
+    return response.status(400).json({ error: 'content missing' })
+  }
 
   console.log(content.name, content.phone, id)
 
@@ -385,7 +395,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-//curl -X "POST" http://localhost:3001/api/persons -H "Content-Type: application/json" -d "{\"name\":\"Jane Austin\", \"phone\":\"0123456789\"}"
+// $ curl -X "PUT" "http://localhost:3001/api/persons/60e14baef45d6a4712a8e018" -H "Content-Type: application/json" -d "{\"name\":\"Arto Hellas\", \"phone\":\"040-123456\"}"
 
 // 3.16 
 app.use(errorHandler)
