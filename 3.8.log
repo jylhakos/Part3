@@ -30,3 +30,14 @@ GET /api/persons 500 2234 - 1.880 ms -
 GET /api/persons 200 529 - 457.645 ms -
 GET /api/persons 200 529 - 422.164 ms -
 GET /api/persons 304 - - 420.275 ms -
+GET /api/persons 304 - - 460.456 ms -
+GET /info 500 2234 - 2.894 ms -
+GET /info 500 2234 - 3.237 ms -
+GET /info 500 2234 - 0.565 ms -
+GET /info 200 110 - 5.878 ms -
+GET /api/persons 200 529 - 449.085 ms -
+GET /info 200 110 - 0.801 ms -
+GET /info 200 110 - 3.344 ms -
+GET /api/persons 200 529 - 442.179 ms -
+GET /info 200 110 - 0.515 ms -
+GET /api/persons 200 529 - 426.688 ms -

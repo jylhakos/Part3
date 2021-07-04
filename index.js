@@ -12,6 +12,9 @@ require('dotenv').config()
 // 3.13
 const Person = require('./models/db')
 
+// 3.13, 3.14, 3.15
+app.use(express.static('build'))
+
 // 3.7, 3.8
 const morgan = require('morgan')
 var fs = require('fs');
@@ -41,6 +44,8 @@ app.use(express.json())
 app.use(cors())
 
 // 3.1
+let persons = []
+
 /*let persons = [
     {
       "name": "Arto Hellas",
@@ -63,6 +68,8 @@ app.use(cors())
       "id": 4
     }
   ] */
+
+let persons_length = 0
 
 // 3.5
 function getRandomInt(min, max) {
@@ -168,6 +175,8 @@ app.get('/api/persons', (request, response) => {
   console.log('/api/persons', request.body)
   // 3.13
   Person.find({}).then(persons => {
+    persons_length = persons.length
+    console.log('persons_length', persons_length)
     response.json(persons)
   })
 
@@ -182,7 +191,7 @@ app.get('/info', (request, response) => {
 
   dateTime.toGMTString('en-US', { timeZone: 'Europe/Helsinki' });
 
-  let info = "<div>Phonebook has info for " + persons.length + " people</div>" + "<br>" + dateTime + "</br>"
+  let info = "<div>Phonebook has info for " + persons_length + " people</div>" + "<br>" + dateTime + "</br>"
 
   console.log(info)
 
