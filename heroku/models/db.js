@@ -7,6 +7,9 @@
 // 3.19
 // $ npm install --save mongoose-unique-validator
 
+// 3.21 
+// heroku config:set MONGODB_URI='mongodb+srv://fullstack:PASSWORD@cluster3-13.pmolw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
 const mongoose = require('mongoose')
 
 var uniqueValidator = require('mongoose-unique-validator');

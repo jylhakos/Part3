@@ -7,6 +7,9 @@
 // 3.19
 // $ npm install --save mongoose-unique-validator
 
+// 3.21
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 
 var uniqueValidator = require('mongoose-unique-validator');

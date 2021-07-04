@@ -127,3 +127,4 @@ PUT /api/persons/60e14baef45d6a4712a8e018 200 75 - 448.709 ms
 GET /api/persons 200 388 - 436.071 ms
 GET /info 200 110 - 268.036 ms
 GET /api/persons 304 - - 237.864 ms
+GET /api/persons 200 469 - 606.980 ms
