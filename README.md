@@ -320,7 +320,7 @@ The environment variable that defines the database URL in production should be s
 
 The top tier of the stack is React.js for creating client applications in HTML and Javascript. 
 
-By making HTTP Requests from React.js app, you can connect to Express functions to access REST API routes. 
+By making HTTP Requests from React.js, the app can send requests to Representational State Transfer (REST) API routes defined in Express.
 
 ```
 
