@@ -351,4 +351,4 @@ A link to Node.js document.
 
 https://nodejs.org/api/synopsis.html
 
-![alt text](https://github.com/jylhakos/Part3/blob/main/react.png?raw=true)
+![alt text](https://github.com/jylhakos/Part3/blob/master/react.png?raw=true)
